@@ -283,5 +283,14 @@
     fetchRelease().then(function (release) {
       if (release) setupDownload(release);
     });
+
+    // GA download tracking
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href*=".dmg"], a[href*=".exe"]');
+      if (!link) return;
+      var href = link.href || '';
+      var platform = /\.exe/i.test(href) ? 'windows' : /aarch64/i.test(href) ? 'mac-arm' : 'mac-intel';
+      if (window.gtag) window.gtag('event', 'download', { platform: platform });
+    });
   });
 })();
