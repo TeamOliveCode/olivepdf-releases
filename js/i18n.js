@@ -32,7 +32,8 @@
       download: {
         title: 'Ready to try?',
         subtitle: 'Free to use. No account required.',
-        macLabel: 'Download for Mac',
+        macArmLabel: 'Download for Mac (Apple Silicon)',
+        macIntelLabel: 'Download for Mac (Intel)',
         winLabel: 'Download for Windows',
         also: 'Also available for {platform}',
         mobile: 'Visit this page on your computer to download.',
@@ -71,7 +72,8 @@
       download: {
         title: '\uc2dc\uc791\ud574 \ubcf4\uc138\uc694',
         subtitle: '\ubb34\ub8cc\ub85c \uc0ac\uc6a9. \uacc4\uc815 \ud544\uc694 \uc5c6\uc74c.',
-        macLabel: 'Mac\uc6a9 \ub2e4\uc6b4\ub85c\ub4dc',
+        macArmLabel: 'Mac\uc6a9 \ub2e4\uc6b4\ub85c\ub4dc (Apple Silicon)',
+        macIntelLabel: 'Mac\uc6a9 \ub2e4\uc6b4\ub85c\ub4dc (Intel)',
         winLabel: 'Windows\uc6a9 \ub2e4\uc6b4\ub85c\ub4dc',
         also: '{platform}\uc6a9\ub3c4 \uc788\uc2b5\ub2c8\ub2e4',
         mobile: '\ucef4\ud4e8\ud130\uc5d0\uc11c \uc774 \ud398\uc774\uc9c0\ub97c \ubc29\ubb38\ud558\uc5ec \ub2e4\uc6b4\ub85c\ub4dc\ud558\uc138\uc694.',
@@ -110,7 +112,8 @@
       download: {
         title: '\u8a66\u3057\u3066\u307f\u307e\u305b\u3093\u304b\uff1f',
         subtitle: '\u7121\u6599\u3067\u4f7f\u3048\u307e\u3059\u3002\u30a2\u30ab\u30a6\u30f3\u30c8\u4e0d\u8981\u3002',
-        macLabel: 'Mac\u7248\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9',
+        macArmLabel: 'Mac\u7248\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9 (Apple Silicon)',
+        macIntelLabel: 'Mac\u7248\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9 (Intel)',
         winLabel: 'Windows\u7248\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9',
         also: '{platform}\u7248\u3082\u3042\u308a\u307e\u3059',
         mobile: '\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u3067\u3053\u306e\u30da\u30fc\u30b8\u3092\u958b\u3044\u3066\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3057\u3066\u304f\u3060\u3055\u3044\u3002',
@@ -149,7 +152,8 @@
       download: {
         title: '\u51c6\u5907\u8bd5\u8bd5\uff1f',
         subtitle: '\u514d\u8d39\u4f7f\u7528\u3002\u65e0\u9700\u8d26\u6237\u3002',
-        macLabel: '\u4e0b\u8f7dMac\u7248',
+        macArmLabel: '\u4e0b\u8f7dMac\u7248 (Apple Silicon)',
+        macIntelLabel: '\u4e0b\u8f7dMac\u7248 (Intel)',
         winLabel: '\u4e0b\u8f7dWindows\u7248',
         also: '\u4e5f\u63d0\u4f9b{platform}\u7248',
         mobile: '\u8bf7\u5728\u7535\u8111\u4e0a\u8bbf\u95ee\u6b64\u9875\u9762\u4e0b\u8f7d\u3002',
@@ -188,7 +192,8 @@
       download: {
         title: '\u6e96\u5099\u8a66\u8a66\uff1f',
         subtitle: '\u514d\u8cbb\u4f7f\u7528\u3002\u7121\u9700\u5e33\u865f\u3002',
-        macLabel: '\u4e0b\u8f09Mac\u7248',
+        macArmLabel: '\u4e0b\u8f09Mac\u7248 (Apple Silicon)',
+        macIntelLabel: '\u4e0b\u8f09Mac\u7248 (Intel)',
         winLabel: '\u4e0b\u8f09Windows\u7248',
         also: '\u4e5f\u63d0\u4f9b{platform}\u7248',
         mobile: '\u8acb\u5728\u96fb\u8166\u4e0a\u8a2a\u554f\u6b64\u9801\u9762\u4e0b\u8f09\u3002',
@@ -227,7 +232,8 @@
       download: {
         title: '\u00bfListo para probarlo?',
         subtitle: 'Gratis. Sin cuenta necesaria.',
-        macLabel: 'Descargar para Mac',
+        macArmLabel: 'Descargar para Mac (Apple Silicon)',
+        macIntelLabel: 'Descargar para Mac (Intel)',
         winLabel: 'Descargar para Windows',
         also: 'Tambi\u00e9n disponible para {platform}',
         mobile: 'Visita esta p\u00e1gina desde tu ordenador para descargar.',
@@ -266,7 +272,8 @@
       download: {
         title: 'Pr\u00eat \u00e0 essayer\u00a0?',
         subtitle: 'Gratuit. Aucun compte n\u00e9cessaire.',
-        macLabel: 'T\u00e9l\u00e9charger pour Mac',
+        macArmLabel: 'T\u00e9l\u00e9charger pour Mac (Apple Silicon)',
+        macIntelLabel: 'T\u00e9l\u00e9charger pour Mac (Intel)',
         winLabel: 'T\u00e9l\u00e9charger pour Windows',
         also: '\u00c9galement disponible pour {platform}',
         mobile: 'Visitez cette page depuis votre ordinateur pour t\u00e9l\u00e9charger.',
@@ -305,7 +312,8 @@
       download: {
         title: 'Bereit zum Ausprobieren?',
         subtitle: 'Kostenlos nutzbar. Kein Konto erforderlich.',
-        macLabel: 'F\u00fcr Mac herunterladen',
+        macArmLabel: 'F\u00fcr Mac herunterladen (Apple Silicon)',
+        macIntelLabel: 'F\u00fcr Mac herunterladen (Intel)',
         winLabel: 'F\u00fcr Windows herunterladen',
         also: 'Auch verf\u00fcgbar f\u00fcr {platform}',
         mobile: 'Besuchen Sie diese Seite auf Ihrem Computer zum Herunterladen.',
@@ -344,7 +352,8 @@
       download: {
         title: 'Pronto para experimentar?',
         subtitle: 'Gratuito. Sem necessidade de conta.',
-        macLabel: 'Baixar para Mac',
+        macArmLabel: 'Baixar para Mac (Apple Silicon)',
+        macIntelLabel: 'Baixar para Mac (Intel)',
         winLabel: 'Baixar para Windows',
         also: 'Tamb\u00e9m dispon\u00edvel para {platform}',
         mobile: 'Visite esta p\u00e1gina no seu computador para baixar.',
@@ -383,7 +392,8 @@
       download: {
         title: 'S\u1eb5n s\u00e0ng th\u1eed?',
         subtitle: 'Mi\u1ec5n ph\u00ed. Kh\u00f4ng c\u1ea7n t\u00e0i kho\u1ea3n.',
-        macLabel: 'T\u1ea3i cho Mac',
+        macArmLabel: 'T\u1ea3i cho Mac (Apple Silicon)',
+        macIntelLabel: 'T\u1ea3i cho Mac (Intel)',
         winLabel: 'T\u1ea3i cho Windows',
         also: 'C\u0169ng c\u00f3 cho {platform}',
         mobile: 'Truy c\u1eadp trang n\u00e0y tr\u00ean m\u00e1y t\u00ednh \u0111\u1ec3 t\u1ea3i v\u1ec1.',
@@ -422,7 +432,8 @@
       download: {
         title: '\u0e1e\u0e23\u0e49\u0e2d\u0e21\u0e25\u0e2d\u0e07\u0e2b\u0e23\u0e37\u0e2d\u0e22\u0e31\u0e07?',
         subtitle: '\u0e43\u0e0a\u0e49\u0e1f\u0e23\u0e35 \u0e44\u0e21\u0e48\u0e15\u0e49\u0e2d\u0e07\u0e2a\u0e21\u0e31\u0e04\u0e23\u0e1a\u0e31\u0e0d\u0e0a\u0e35',
-        macLabel: '\u0e14\u0e32\u0e27\u0e19\u0e4c\u0e42\u0e2b\u0e25\u0e14\u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a Mac',
+        macArmLabel: '\u0e14\u0e32\u0e27\u0e19\u0e4c\u0e42\u0e2b\u0e25\u0e14\u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a Mac (Apple Silicon)',
+        macIntelLabel: '\u0e14\u0e32\u0e27\u0e19\u0e4c\u0e42\u0e2b\u0e25\u0e14\u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a Mac (Intel)',
         winLabel: '\u0e14\u0e32\u0e27\u0e19\u0e4c\u0e42\u0e2b\u0e25\u0e14\u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a Windows',
         also: '\u0e22\u0e31\u0e07\u0e21\u0e35\u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a {platform}',
         mobile: '\u0e40\u0e02\u0e49\u0e32\u0e0a\u0e21\u0e2b\u0e19\u0e49\u0e32\u0e19\u0e35\u0e49\u0e1a\u0e19\u0e04\u0e2d\u0e21\u0e1e\u0e34\u0e27\u0e40\u0e15\u0e2d\u0e23\u0e4c\u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e14\u0e32\u0e27\u0e19\u0e4c\u0e42\u0e2b\u0e25\u0e14',

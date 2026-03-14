@@ -10,6 +10,26 @@
     return 'other';
   }
 
+  function detectMacArch() {
+    // Chromium: navigator.userAgentData
+    if (navigator.userAgentData && navigator.userAgentData.architecture) {
+      return navigator.userAgentData.architecture === 'arm' ? 'arm' : 'x64';
+    }
+    // Safari/Firefox: check WebGL renderer
+    try {
+      var canvas = document.createElement('canvas');
+      var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (gl) {
+        var ext = gl.getExtension('WEBGL_debug_renderer_info');
+        if (ext) {
+          var renderer = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL);
+          if (/Apple/.test(renderer) && !/Intel|AMD|NVIDIA/.test(renderer)) return 'arm';
+        }
+      }
+    } catch (e) {}
+    return 'arm'; // Default to Apple Silicon for modern Macs
+  }
+
   // ── Release API ──
   var releaseCache = null;
 
@@ -46,47 +66,66 @@
     var heroCtaText = document.getElementById('heroCtaText');
     var heroCtaMeta = document.getElementById('heroCtaMeta');
     var heroAlso = document.getElementById('heroAlso');
-    var downloadMac = document.getElementById('downloadMac');
     var downloadWin = document.getElementById('downloadWin');
 
     if (!release || !release.assets) return;
 
-    var macAsset = null;
+    var macArmAsset = null;
+    var macIntelAsset = null;
     var winAsset = null;
 
     for (var i = 0; i < release.assets.length; i++) {
       var name = release.assets[i].name;
-      if (/\.dmg$/i.test(name)) macAsset = release.assets[i];
+      if (/aarch64\.dmg$/i.test(name)) macArmAsset = release.assets[i];
+      else if (/x64\.dmg$/i.test(name) || /x86_64\.dmg$/i.test(name)) macIntelAsset = release.assets[i];
       if (/\.exe$/i.test(name)) winAsset = release.assets[i];
     }
 
     var version = (release.version || '').replace(/^v/, '');
     var freeText = window.I18n.t('hero.free');
+    var macArch = detectMacArch();
+    var macAsset = macArch === 'arm' ? macArmAsset : macIntelAsset;
+    var macOtherAsset = macArch === 'arm' ? macIntelAsset : macArmAsset;
+    var macOtherLabel = macArch === 'arm' ? 'Mac (Intel)' : 'Mac (Apple Silicon)';
 
     // Hero CTA
     if (os === 'mac' && macAsset) {
       heroCtaText.textContent = window.I18n.t('hero.ctaMac');
       heroCta.href = macAsset.downloadUrl;
       heroCtaMeta.textContent = 'v' + version + ' \u00b7 ' + formatSize(macAsset.size) + ' \u00b7 ' + freeText;
-      if (winAsset) {
-        heroAlso.innerHTML = window.I18n.t('download.also').replace('{platform}', '<a href="' + winAsset.downloadUrl + '">Windows</a>');
+      var alsoLinks = [];
+      if (macOtherAsset) alsoLinks.push('<a href="' + macOtherAsset.downloadUrl + '">' + macOtherLabel + '</a>');
+      if (winAsset) alsoLinks.push('<a href="' + winAsset.downloadUrl + '">Windows</a>');
+      if (alsoLinks.length) {
+        heroAlso.innerHTML = window.I18n.t('download.also').replace('{platform}', alsoLinks.join(', '));
       }
     } else if (os === 'win' && winAsset) {
       heroCtaText.textContent = window.I18n.t('hero.ctaWin');
       heroCta.href = winAsset.downloadUrl;
       heroCtaMeta.textContent = 'v' + version + ' \u00b7 ' + formatSize(winAsset.size) + ' \u00b7 ' + freeText;
-      if (macAsset) {
-        heroAlso.innerHTML = window.I18n.t('download.also').replace('{platform}', '<a href="' + macAsset.downloadUrl + '">Mac</a>');
+      var alsoMacLinks = [];
+      if (macArmAsset) alsoMacLinks.push('<a href="' + macArmAsset.downloadUrl + '">Mac (Apple Silicon)</a>');
+      if (macIntelAsset) alsoMacLinks.push('<a href="' + macIntelAsset.downloadUrl + '">Mac (Intel)</a>');
+      if (alsoMacLinks.length) {
+        heroAlso.innerHTML = window.I18n.t('download.also').replace('{platform}', alsoMacLinks.join(', '));
       }
     } else {
       heroCtaMeta.textContent = 'v' + version + ' \u00b7 ' + freeText;
     }
 
     // Download section buttons
-    if (macAsset) {
-      downloadMac.href = macAsset.downloadUrl;
-      var macMeta = downloadMac.querySelector('.dl-btn-meta');
-      if (macMeta) macMeta.textContent = 'macOS 11+ \u00b7 ' + formatSize(macAsset.size);
+    var downloadMacArm = document.getElementById('downloadMacArm');
+    var downloadMacIntel = document.getElementById('downloadMacIntel');
+
+    if (macArmAsset && downloadMacArm) {
+      downloadMacArm.href = macArmAsset.downloadUrl;
+      var armMeta = downloadMacArm.querySelector('.dl-btn-meta');
+      if (armMeta) armMeta.textContent = 'macOS 11+ \u00b7 ' + formatSize(macArmAsset.size);
+    }
+    if (macIntelAsset && downloadMacIntel) {
+      downloadMacIntel.href = macIntelAsset.downloadUrl;
+      var intelMeta = downloadMacIntel.querySelector('.dl-btn-meta');
+      if (intelMeta) intelMeta.textContent = 'macOS 11+ \u00b7 ' + formatSize(macIntelAsset.size);
     }
     if (winAsset) {
       downloadWin.href = winAsset.downloadUrl;
@@ -96,10 +135,17 @@
 
     // Reorder buttons: user's OS first
     var downloadButtons = document.getElementById('downloadButtons');
-    if (os === 'win' && downloadWin && downloadMac) {
+    if (os === 'win') {
       downloadWin.className = 'dl-btn dl-btn-primary';
-      downloadMac.className = 'dl-btn dl-btn-secondary';
-      downloadButtons.insertBefore(downloadWin, downloadMac);
+      if (downloadMacArm) downloadMacArm.className = 'dl-btn dl-btn-secondary';
+      if (downloadMacIntel) downloadMacIntel.className = 'dl-btn dl-btn-secondary';
+      downloadButtons.insertBefore(downloadWin, downloadButtons.firstChild);
+    } else if (os === 'mac' && macArch === 'x64') {
+      if (downloadMacIntel) {
+        downloadMacIntel.className = 'dl-btn dl-btn-primary';
+        downloadButtons.insertBefore(downloadMacIntel, downloadButtons.firstChild);
+      }
+      if (downloadMacArm) downloadMacArm.className = 'dl-btn dl-btn-secondary';
     }
   }
 
