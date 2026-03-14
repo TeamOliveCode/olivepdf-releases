@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OlivePDF — PDF editing, without the overhead</title>
+  <meta name="description" content="A free, lightweight PDF editor for Mac and Windows. Text, images, signatures, redaction — everything runs on your machine.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <svg class="nav-logo-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="7" fill="#4A7C59"/>
+          <path d="M9 5.5h10.5l4 4V26H9z" fill="#fff" opacity=".9"/>
+          <path d="M19.5 5.5l4 4h-4z" fill="#ccc"/>
+          <text x="16" y="19.5" font-family="system-ui" font-size="7" font-weight="700" fill="#D32F2F" text-anchor="middle">PDF</text>
+        </svg>
+        <span>OlivePDF</span>
+      </a>
+      <div class="nav-right">
+        <div class="lang-select" id="langSelect">
+          <button class="lang-btn" id="langBtn" aria-label="Change language">
+            <span id="langLabel">EN</span>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="lang-dropdown" id="langDropdown">
+            <button data-lang="en">English</button>
+            <button data-lang="ko">한국어</button>
+            <button data-lang="ja">日本語</button>
+            <button data-lang="zh-CN">简体中文</button>
+            <button data-lang="zh-TW">繁體中文</button>
+            <button data-lang="es">Español</button>
+            <button data-lang="fr">Français</button>
+            <button data-lang="de">Deutsch</button>
+            <button data-lang="pt">Português</button>
+            <button data-lang="vi">Tiếng Việt</button>
+            <button data-lang="th">ไทย</button>
+          </div>
+        </div>
+        <a href="#download" class="nav-cta" data-i18n="nav.download">Download</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <h1 data-i18n="hero.headline">PDF editing, without the overhead.</h1>
+        <p class="hero-sub" data-i18n="hero.subtitle">A free, lightweight editor for Mac and Windows. Text, images, signatures, redaction — everything runs on your machine.</p>
+        <div class="hero-actions">
+          <a class="hero-cta-btn" id="heroCta" href="#download">
+            <span class="hero-cta-main" id="heroCtaText" data-i18n="hero.cta">Download for free</span>
+            <span class="hero-cta-sub" id="heroCtaMeta"></span>
+          </a>
+          <p class="hero-also" id="heroAlso"></p>
+        </div>
+      </div>
+
+      <div class="hero-screenshot">
+        <div class="container">
+          <div class="app-window animate-in">
+            <div class="app-window-header">
+              <div class="window-dots">
+                <span class="dot dot-close"></span>
+                <span class="dot dot-minimize"></span>
+                <span class="dot dot-maximize"></span>
+              </div>
+              <span class="window-title">OlivePDF</span>
+            </div>
+            <div class="app-window-body">
+              <img src="assets/screenshots/app.png" alt="OlivePDF editor" id="appScreenshot" class="screenshot-img" loading="eager">
+              <!-- CSS mockup fallback -->
+              <div class="app-mockup" id="appMockup">
+                <div class="mockup-toolbar">
+                  <div class="mockup-tool-group">
+                    <span class="mockup-tool">
+                      <svg viewBox="0 0 16 16" fill="none" stroke="#6b7280" stroke-width="1.2"><path d="M3 13h10M5 3h6v7H5z"/></svg>
+                    </span>
+                    <span class="mockup-tool">
+                      <svg viewBox="0 0 16 16" fill="none" stroke="#6b7280" stroke-width="1.2"><rect x="4" y="3" width="8" height="10" rx="1"/></svg>
+                    </span>
+                    <span class="mockup-tool active">
+                      <svg viewBox="0 0 16 16" fill="none" stroke="#4A7C59" stroke-width="1.2"><path d="M4 8h8M8 4v8"/></svg>
+                    </span>
+                    <span class="mockup-tool">
+                      <svg viewBox="0 0 16 16" fill="none" stroke="#6b7280" stroke-width="1.2"><path d="M3 12l3-4 2 2 4-5"/></svg>
+                    </span>
+                  </div>
+                  <div class="mockup-divider"></div>
+                  <div class="mockup-tool-group">
+                    <span class="mockup-tool">
+                      <svg viewBox="0 0 16 16" fill="none" stroke="#6b7280" stroke-width="1.2"><path d="M3 3h10v2H3zM3 7h7v2H3z"/></svg>
+                    </span>
+                    <span class="mockup-tool">
+                      <svg viewBox="0 0 16 16" fill="none" stroke="#6b7280" stroke-width="1.2"><path d="M11 3l2 2-7 7H4v-2z"/></svg>
+                    </span>
+                    <span class="mockup-tool">
+                      <svg viewBox="0 0 16 16" fill="none" stroke="#6b7280" stroke-width="1.2"><circle cx="8" cy="8" r="4"/><path d="M8 6v4M6 8h4"/></svg>
+                    </span>
+                  </div>
+                  <div class="mockup-spacer"></div>
+                  <span class="mockup-export">Export</span>
+                </div>
+                <div class="mockup-body">
+                  <div class="mockup-sidebar">
+                    <div class="mockup-thumb active">
+                      <div class="mockup-thumb-line" style="width:70%"></div>
+                      <div class="mockup-thumb-line" style="width:50%"></div>
+                      <div class="mockup-thumb-line" style="width:60%"></div>
+                    </div>
+                    <div class="mockup-thumb">
+                      <div class="mockup-thumb-line" style="width:65%"></div>
+                      <div class="mockup-thumb-line" style="width:55%"></div>
+                      <div class="mockup-thumb-line" style="width:45%"></div>
+                    </div>
+                    <div class="mockup-thumb">
+                      <div class="mockup-thumb-line" style="width:60%"></div>
+                      <div class="mockup-thumb-line" style="width:70%"></div>
+                      <div class="mockup-thumb-line" style="width:40%"></div>
+                    </div>
+                  </div>
+                  <div class="mockup-canvas">
+                    <div class="mockup-page">
+                      <div class="mockup-page-line" style="width:80%"></div>
+                      <div class="mockup-page-line" style="width:55%"></div>
+                      <div class="mockup-page-line" style="width:72%"></div>
+                      <div class="mockup-page-line" style="width:45%"></div>
+                      <div class="mockup-page-gap"></div>
+                      <div class="mockup-page-line" style="width:88%"></div>
+                      <div class="mockup-page-line highlight" style="width:40%"></div>
+                      <div class="mockup-page-line" style="width:65%"></div>
+                      <div class="mockup-page-line" style="width:78%"></div>
+                      <div class="mockup-page-gap"></div>
+                      <div class="mockup-image-block">
+                        <svg viewBox="0 0 40 28" fill="none"><rect width="40" height="28" rx="2" fill="#e8f0ea"/><path d="M8 20l8-10 6 7 4-3 6 6H8z" fill="#4A7C59" opacity=".3"/><circle cx="28" cy="8" r="3" fill="#4A7C59" opacity=".2"/></svg>
+                      </div>
+                      <div class="mockup-page-line" style="width:70%"></div>
+                      <div class="mockup-page-line" style="width:60%"></div>
+                      <div class="mockup-signature">
+                        <svg viewBox="0 0 80 24" fill="none"><path d="M4 18c4-8 8-12 14-12s8 6 12 6 6-4 10-4 6 2 10 2 8-6 12-6 6 8 10 8" stroke="#2D5A3F" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mockup-statusbar">
+                  <span class="mockup-status-dot"></span>
+                  <span class="mockup-status-text">Page 1 / 3</span>
+                  <span class="mockup-status-spacer"></span>
+                  <span class="mockup-status-text">100%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+      <div class="container">
+        <h2 class="animate-in" data-i18n="features.title">Everything you need. Nothing you don't.</h2>
+        <div class="features-grid">
+          <div class="feature animate-in">
+            <div class="feature-number">01</div>
+            <h3 data-i18n="features.edit.title">Edit with precision</h3>
+            <p data-i18n="features.edit.desc">Place text, images, signatures, and stamps exactly where you need them. Pixel-perfect positioning with drag, resize, and rotate.</p>
+          </div>
+          <div class="feature animate-in">
+            <div class="feature-number">02</div>
+            <h3 data-i18n="features.secure.title">Private by default</h3>
+            <p data-i18n="features.secure.desc">Everything runs on your machine. No uploads, no cloud processing, no accounts. Your documents stay yours.</p>
+          </div>
+          <div class="feature animate-in">
+            <div class="feature-number">03</div>
+            <h3 data-i18n="features.redact.title">Smart redaction</h3>
+            <p data-i18n="features.redact.desc">Auto-detect and mask personal information — ID numbers, phone numbers, emails, and account numbers.</p>
+          </div>
+          <div class="feature animate-in">
+            <div class="feature-number">04</div>
+            <h3 data-i18n="features.manage.title">Merge &amp; split</h3>
+            <p data-i18n="features.manage.desc">Combine multiple PDFs, extract specific pages, reorder, and add watermarks. All the document operations you need.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download -->
+    <section class="download" id="download">
+      <div class="container">
+        <h2 class="animate-in" data-i18n="download.title">Ready to try?</h2>
+        <p class="download-sub animate-in" data-i18n="download.subtitle">Free to use. No account required.</p>
+        <div class="download-buttons animate-in" id="downloadButtons">
+          <a class="dl-btn dl-btn-primary" id="downloadMac" href="#">
+            <svg class="dl-btn-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+            </svg>
+            <span class="dl-btn-text">
+              <span class="dl-btn-label" data-i18n="download.macLabel">Download for Mac</span>
+              <span class="dl-btn-meta">macOS 11+</span>
+            </span>
+          </a>
+          <a class="dl-btn dl-btn-secondary" id="downloadWin" href="#">
+            <svg class="dl-btn-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 12V6.75l8-1.25V12H3zm0 .5h8v6.5l-8-1.25V12.5zM11.5 5.34l9.5-1.59V12h-9.5V5.34zM11.5 12.5H21v7.25l-9.5-1.59V12.5z"/>
+            </svg>
+            <span class="dl-btn-text">
+              <span class="dl-btn-label" data-i18n="download.winLabel">Download for Windows</span>
+              <span class="dl-btn-meta">Windows 10+</span>
+            </span>
+          </a>
+        </div>
+        <p class="download-mobile" id="downloadMobile" data-i18n="download.mobile">Visit this page on your computer to download.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 OliveLabs</p>
+      <p class="footer-links">
+        <a href="https://github.com/olivelabs/olive-pdf" target="_blank" rel="noopener">GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

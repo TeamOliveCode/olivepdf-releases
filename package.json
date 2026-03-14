@@ -1,0 +1,9 @@
+{
+  "name": "olivepdf-landing",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve .",
+    "preview": "npx serve . -l 3000"
+  }
+}
