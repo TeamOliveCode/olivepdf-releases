@@ -11,11 +11,9 @@
   }
 
   function detectMacArch() {
-    // Chromium: navigator.userAgentData
     if (navigator.userAgentData && navigator.userAgentData.architecture) {
       return navigator.userAgentData.architecture === 'arm' ? 'arm' : 'x64';
     }
-    // Safari/Firefox: check WebGL renderer
     try {
       var canvas = document.createElement('canvas');
       var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
@@ -27,7 +25,7 @@
         }
       }
     } catch (e) {}
-    return 'arm'; // Default to Apple Silicon for modern Macs
+    return 'arm';
   }
 
   // ── Release API ──
@@ -64,8 +62,6 @@
     var os = detectOS();
     var heroCta = document.getElementById('heroCta');
     var heroCtaText = document.getElementById('heroCtaText');
-    var heroCtaMeta = document.getElementById('heroCtaMeta');
-    var heroAlso = document.getElementById('heroAlso');
     var downloadWin = document.getElementById('downloadWin');
 
     if (!release || !release.assets) return;
@@ -81,36 +77,16 @@
       if (/\.exe$/i.test(name)) winAsset = release.assets[i];
     }
 
-    var version = (release.version || '').replace(/^v/, '');
-    var freeText = window.I18n.t('hero.free');
     var macArch = detectMacArch();
     var macAsset = macArch === 'arm' ? macArmAsset : macIntelAsset;
-    var macOtherAsset = macArch === 'arm' ? macIntelAsset : macArmAsset;
-    var macOtherLabel = macArch === 'arm' ? 'Mac (Intel)' : 'Mac (Apple Silicon)';
 
-    // Hero CTA
+    // Hero CTA — point to user's OS download
     if (os === 'mac' && macAsset) {
       heroCtaText.textContent = window.I18n.t('hero.ctaMac');
       heroCta.href = macAsset.downloadUrl;
-      heroCtaMeta.textContent = 'v' + version + ' \u00b7 ' + formatSize(macAsset.size) + ' \u00b7 ' + freeText;
-      var alsoLinks = [];
-      if (macOtherAsset) alsoLinks.push('<a href="' + macOtherAsset.downloadUrl + '">' + macOtherLabel + '</a>');
-      if (winAsset) alsoLinks.push('<a href="' + winAsset.downloadUrl + '">Windows</a>');
-      if (alsoLinks.length) {
-        heroAlso.innerHTML = window.I18n.t('download.also').replace('{platform}', alsoLinks.join(', '));
-      }
     } else if (os === 'win' && winAsset) {
       heroCtaText.textContent = window.I18n.t('hero.ctaWin');
       heroCta.href = winAsset.downloadUrl;
-      heroCtaMeta.textContent = 'v' + version + ' \u00b7 ' + formatSize(winAsset.size) + ' \u00b7 ' + freeText;
-      var alsoMacLinks = [];
-      if (macArmAsset) alsoMacLinks.push('<a href="' + macArmAsset.downloadUrl + '">Mac (Apple Silicon)</a>');
-      if (macIntelAsset) alsoMacLinks.push('<a href="' + macIntelAsset.downloadUrl + '">Mac (Intel)</a>');
-      if (alsoMacLinks.length) {
-        heroAlso.innerHTML = window.I18n.t('download.also').replace('{platform}', alsoMacLinks.join(', '));
-      }
-    } else {
-      heroCtaMeta.textContent = 'v' + version + ' \u00b7 ' + freeText;
     }
 
     // Download section buttons
@@ -189,7 +165,6 @@
         window.I18n.setLang(this.getAttribute('data-lang'));
         updateLabel();
         langDropdown.classList.remove('open');
-        // Re-apply download labels
         if (releaseCache) setupDownload(releaseCache);
       });
     }
@@ -197,13 +172,12 @@
     updateLabel();
   }
 
-  // ── Scroll Animations ──
-  function setupAnimations() {
-    var elements = document.querySelectorAll('.animate-in');
+  // ── Scroll Reveal ──
+  function setupScrollReveal() {
+    var elements = document.querySelectorAll('.reveal');
     if (!elements.length) return;
 
     if (!('IntersectionObserver' in window)) {
-      // Fallback: just show everything
       for (var i = 0; i < elements.length; i++) {
         elements[i].classList.add('visible');
       }
@@ -219,7 +193,7 @@
           }
         });
       },
-      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
     );
 
     for (var j = 0; j < elements.length; j++) {
@@ -227,29 +201,36 @@
     }
   }
 
-  // ── Screenshot fallback ──
-  function setupScreenshot() {
-    var img = document.getElementById('appScreenshot');
-    if (!img) return;
+  // ── App Preview Parallax ──
+  function setupParallax() {
+    var frame = document.getElementById('appPreviewFrame');
+    if (!frame) return;
 
-    function onLoad() {
-      img.classList.add('loaded');
-      // The real screenshot already includes macOS window chrome,
-      // so hide the CSS-rendered window header to avoid duplication
-      var header = img.closest('.app-window').querySelector('.app-window-header');
-      if (header) header.style.display = 'none';
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var ticking = false;
+
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(function () {
+          var rect = frame.getBoundingClientRect();
+          var windowHeight = window.innerHeight;
+          var progress = 1 - (rect.top / windowHeight);
+          progress = Math.max(0, Math.min(1, progress));
+
+          var rotateX = 2 * (1 - progress);
+          var scale = 0.96 + 0.04 * progress;
+
+          frame.style.transform =
+            'perspective(1200px) rotateX(' + rotateX.toFixed(2) + 'deg) scale(' + scale.toFixed(4) + ')';
+          ticking = false;
+        });
+        ticking = true;
+      }
     }
 
-    // Handle race condition: image may already be loaded from cache
-    if (img.complete && img.naturalWidth > 0) {
-      onLoad();
-    } else {
-      img.addEventListener('load', onLoad);
-    }
-
-    img.addEventListener('error', function () {
-      img.style.display = 'none';
-    });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
 
   // ── Smooth scroll for anchor links ──
@@ -275,8 +256,8 @@
     setupLangSelector();
 
     // UI
-    setupScreenshot();
-    setupAnimations();
+    setupScrollReveal();
+    setupParallax();
     setupSmoothScroll();
 
     // Fetch release data
